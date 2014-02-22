@@ -6,7 +6,7 @@ r.login("USERNAME","PASSWORD")
 already_done = set()
 prawWords = ['a', 'e', 'i', 'o', 'u']
 prawTerms = ['+/u/dogetipbot']
-#and sometimes y
+# and sometimes Y. Including all the vowels makes the bot more random.
 while True:
 	def pick_random():
                 subreddit = r.get_subreddit('dogecoin')
