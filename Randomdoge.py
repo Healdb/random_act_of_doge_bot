@@ -4,8 +4,8 @@ import praw
 r = praw.Reddit('Randomactofdogebot')
 r.login("USERNAME","PASSWORD")
 already_done = set()
-prawWords = ['a']
-
+prawWords = ['a', 'e', 'i', 'o', 'u']
+# and sometimes Y
 while True:
         def pick_random():
                 subreddit = r.get_subreddit('dogecoin')
