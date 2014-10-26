@@ -56,7 +56,6 @@ def check_inbox():
             break
 
 
-
 while True:
     check_inbox()
     pick_random_comment()
