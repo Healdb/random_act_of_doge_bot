@@ -45,6 +45,8 @@ def pick_random_comment():
 def lucky_tip(message, amount):
     if amount < 100.1:  ## Stop mega payouts
         message.reply("Your tip was a lucky tip!\n\n+/u/dogetipbot " + str(amount * 2) + " doge")
+        return True
+    return False
     
 #Look for incoming tip
 def check_inbox():
@@ -57,7 +59,8 @@ def check_inbox():
             if amount_matches: # found a specified amount in the comment
                 tip_allows_hours = float(amount_matches[0]) / average_tip
                 if randamount(0, lucky_chance + 1) == 0:
-                    lucky_tip(message, float(amount_matches[0]))
+                    if not lucky_tip(message, float(amount_matches[0])):
+                        message.reply('Thank you! This will help to keep me running for {num_hours} hours!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)'.format(num_hours = tip_allows_hours))
                 else:
                     message.reply('Thank you! This will help to keep me running for {num_hours} hours!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)'.format(num_hours = tip_allows_hours))
                 
