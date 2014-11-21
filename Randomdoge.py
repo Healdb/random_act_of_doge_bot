@@ -1,3 +1,5 @@
+##FourOhFour Fork of randomactofdoge bot
+
 import time
 import praw
 import random
@@ -15,6 +17,7 @@ prawTerms = ['+/u/dogetipbot']
 #This searches for an amount in a tip, given to the bot
 tip_amount_pattern = re.compile("D?(\d+) ?(?:D|doge)?", re.IGNORECASE)
 
+lucky_chance = 10
 amount_min = 15
 amount_max = 25
 average_tip = float(amount_min + amount_max) / 2
@@ -39,6 +42,12 @@ def pick_random_comment():
             already_done.add(comment.id)
             break
 
+def lucky_tip(message, amount):
+    if amount < 100.1:  ## Stop mega payouts
+        message.reply("Your tip was a lucky tip!\n\n+/u/dogetipbot " + str(amount * 2) + " doge")
+        return True
+    return False
+    
 #Look for incoming tip
 def check_inbox():
     messages = r.get_unread('comments')
@@ -49,9 +58,16 @@ def check_inbox():
             amount_matches = tip_amount_pattern.findall(op_text)
             if amount_matches: # found a specified amount in the comment
                 tip_allows_hours = float(amount_matches[0]) / average_tip
-                message.reply('Thank you! This will help to keep me running for {num_hours} hours!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)'.format(num_hours = tip_allows_hours))
+                if randamount(0, lucky_chance + 1) == 0:
+                    if not lucky_tip(message, float(amount_matches[0])):
+                        message.reply('Thank you! This will help to keep me running for {num_hours} hours!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)'.format(num_hours = tip_allows_hours))
+                else:
+                    message.reply('Thank you! This will help to keep me running for {num_hours} hours!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)'.format(num_hours = tip_allows_hours))
+                
             else:
                 message.reply('Thank you! This will help to keep me running!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)')
+                
+            
             already_done.add(message.id)
             break
 
