@@ -5,15 +5,15 @@ import re
 
 #Credit- Thanks to /u/spacer0cket for all his help! He cleaned up the code and  added some great new features.
 
-# Login in to Reddit and the bot
+#Login in to Reddit and the bot
 r = praw.Reddit('Randomactofdogebot')
 r.login("USERNAME","PASSWORD")
 already_done = set()
-prawWords = ['a', 'e', 'i', 'o', 'u']
 #And sometimes Y. Including all the vowels makes the bot more random.
+prawWords = ['a', 'e', 'i', 'o', 'u']
 prawTerms = ['+/u/dogetipbot']
+#This searches for an amount in a tip, given to the bot
 tip_amount_pattern = re.compile("D?(\d+) ?(?:D|doge)?", re.IGNORECASE)
-# this searches for an amount in a tip, given to the bot
 
 amount_min = 15
 amount_max = 25
@@ -54,7 +54,6 @@ def check_inbox():
                 message.reply('Thank you! This will help to keep me running!\n\n[Bot Info](http://www.reddit.com/r/dogecoin/comments/1yi0s1/all_the_information_you_need_to_know_about_me/) ---- [Source Code](https://github.com/Healdb/random_act_of_doge_bot)')
             already_done.add(message.id)
             break
-
 
 
 while True:
